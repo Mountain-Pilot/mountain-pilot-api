@@ -1,0 +1,6 @@
+@Mountain_Pilot.Api_HostAddress = http://localhost:5224
+
+GET {{Mountain_Pilot.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
