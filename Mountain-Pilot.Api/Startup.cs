@@ -10,7 +10,7 @@ namespace jet.piranha.Api
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            Configuration = configuratio;
         }
 
         public IConfiguration Configuration { get; }
