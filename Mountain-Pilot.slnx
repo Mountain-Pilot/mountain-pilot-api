@@ -1,4 +1,5 @@
 <Solution>
   <Project Path="Mountain-Pilot.Api/Mountain-Pilot.Api.csproj" />
+  <Project Path="Mountain-Pilot.Data/Mountain-Pilot.Data.csproj" />
   <Project Path="Mountain-Pilot.Domain/Mountain-Pilot.Domain.csproj" />
 </Solution>
