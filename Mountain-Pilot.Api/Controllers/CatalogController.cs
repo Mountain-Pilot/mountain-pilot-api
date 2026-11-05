@@ -8,3 +8,9 @@ public ActionResult<Item> GetItem(int id)
     }
     return item;
 }
+[HttpPost]
+public ActionResult<Item> PostItem(Item newItem)
+{
+    Catalog.Add(newItem);
+    return CreatedAtAction(nameof(GetItem), new { id = newItem.Id }, newItem);
+}
