@@ -25,3 +25,20 @@ public ActionResult<Item> PostRating(int id, Rating newRating)
     item.AddRating(newRating);
     return Ok(item);
 }
+[HttpPut("{id:int}")]
+public ActionResult PutItem(int id, Item updatedItem)
+{
+    if (id != updatedItem.Id)
+    {
+        return BadRequest();
+    }
+
+    var index = Catalog.FindIndex(i => i.Id == id);
+    if (index == -1)
+    {
+        return NotFound();
+    }
+
+    Catalog[index] = updatedItem;
+    return NoContent();
+}
