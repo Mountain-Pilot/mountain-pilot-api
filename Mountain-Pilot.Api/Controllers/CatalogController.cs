@@ -42,3 +42,15 @@ public ActionResult PutItem(int id, Item updatedItem)
     Catalog[index] = updatedItem;
     return NoContent();
 }
+[HttpDelete("{id:int}")]
+public ActionResult DeleteItem(int id)
+{
+    var index = Catalog.FindIndex(i => i.Id == id);
+    if (index == -1)
+    {
+        return NotFound();
+    }
+
+    Catalog.RemoveAt(index);
+    return NoContent();
+}
