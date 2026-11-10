@@ -1,3 +1,4 @@
+using Mountain_Pilot.Domain.Catalog;
 namespace Mountain_Pilot.Domain.Catalog;
 
 public class Rating

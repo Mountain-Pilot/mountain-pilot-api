@@ -1,4 +1,4 @@
-﻿using Mountain_Pilot.Domain;
+﻿using Mountain_Pilot.Domain.Catalog;
 namespace Mountain_Pilot.Domain.Tests;
 
 [TestClass]
