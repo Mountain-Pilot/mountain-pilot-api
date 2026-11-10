@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/tests/">
+    <Project Path="tests/Mountain-Pilot.Domain.Tests/Mountain-Pilot.Domain.Tests.csproj" />
+  </Folder>
   <Project Path="Mountain-Pilot.Api/Mountain-Pilot.Api.csproj" />
   <Project Path="Mountain-Pilot.Domain/Mountain-Pilot.Domain.csproj" />
 </Solution>
