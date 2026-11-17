@@ -8,15 +8,11 @@ namespace Mountain_Pilot.Api.Controllers;
 [Route("[controller]")]
 public class CatalogController : ControllerBase
 {
-    private static readonly List<Item> Catalog = new()
-    {
-        private static readonly List<Item> Catalog = new()
+   private static readonly List<Item> Catalog = new()
 {
-    new Item("Item One", "Description one", "Brand One", 10.00m),
-    new Item("Item Two", "Description two", "Brand Two", 20.00m)
+    new Item("Item One", "Description one", "Brand One", 10.00m) { Id = 1 },
+    new Item("Item Two", "Description two", "Brand Two", 20.00m) { Id = 2 }
 };
-    };
-
     [HttpGet]
     public ActionResult<List<Item>> GetItems()
     {
