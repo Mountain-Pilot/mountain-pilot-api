@@ -10,8 +10,11 @@ public class CatalogController : ControllerBase
 {
     private static readonly List<Item> Catalog = new()
     {
-        new Item(1, "Item One", "Description one", 10.00m),
-        new Item(2, "Item Two", "Description two", 20.00m)
+        private static readonly List<Item> Catalog = new()
+{
+    new Item("Item One", "Description one", "Brand One", 10.00m),
+    new Item("Item Two", "Description two", "Brand Two", 20.00m)
+};
     };
 
     [HttpGet]
