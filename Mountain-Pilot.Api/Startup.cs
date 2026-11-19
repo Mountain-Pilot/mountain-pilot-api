@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Mountain_Pilot.Data;
 
-namespace jet.piranha.Api
+namespace Mountain_Pilot.Api
 {
     public class Startup
     {
@@ -18,8 +20,15 @@ namespace jet.piranha.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
             services.AddEndpointsApiExplorer();
+
             services.AddSwaggerGen();
+
+            services.AddDbContext<StoreContext>(options =>
+                options.UseSqlite(
+                    "Data Source=../Registrar.sqlite",
+                    b => b.MigrationsAssembly("Mountain_Pilot.Api")));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -27,8 +36,13 @@ namespace jet.piranha.Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "jet.piranha.Api v1"));
+
+                app.UseSwaggerUI(c =>
+                    c.SwaggerEndpoint(
+                        "/swagger/v1/swagger.json",
+                        "Mountain Pilot API v1"));
             }
 
             app.UseHttpsRedirection();
