@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Mountain_Pilot.Domain.Catalog;
 using Mountain_Pilot.Domain;
 using Mountain_Pilot.Domain.Catalog;
 using Microsoft.AspNetCore.Authorization;
@@ -11,10 +12,19 @@ public class CatalogController : ControllerBase
 {
   private static readonly List<Item> Catalog = new()
 {
+    new Item("Item One","Description one","Brand One",10.00m)
+    {
+        Id = 1
+    },
     new Item("1", "Item One", "Description one", 10.00m),
     new Item("2", "Item Two", "Description two", 20.00m)
 };
 
+    new Item("Item Two","Description two","Brand Two",20.00m)
+    {
+        Id = 2
+    }
+};
     [HttpGet]
     public ActionResult<List<Item>> GetItems()
     {
