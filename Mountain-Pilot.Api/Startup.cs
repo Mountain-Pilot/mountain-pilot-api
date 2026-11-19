@@ -31,7 +31,7 @@ namespace Mountain_Pilot.Api
             services.AddDbContext<StoreContext>(options =>
                 options.UseSqlite(
                     "Data Source=../Registrar.sqlite",
-                    b => b.MigrationsAssembly("Mountain_Pilot.Api")));
+                    b => b.MigrationsAssembly("Mountain-Pilot.Api")));
             // 1. CORS Policy
             services.AddCors(options =>
             {

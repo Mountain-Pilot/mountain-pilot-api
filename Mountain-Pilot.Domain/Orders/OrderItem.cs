@@ -8,6 +8,8 @@ namespace Mountain_Pilot.Domain.Orders
 
         public Item Item { get; set; }
 
+        public decimal Price => Item.Price * Quantity;
+
         public int Quantity { get; set; }
     }
 }

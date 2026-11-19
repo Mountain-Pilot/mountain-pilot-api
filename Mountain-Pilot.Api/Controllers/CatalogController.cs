@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Mountain_Pilot.Domain.Catalog;
-using Mountain_Pilot.Domain;
-using Mountain_Pilot.Domain.Catalog;
 using Microsoft.AspNetCore.Authorization;
+using Mountain_Pilot.Data;
 
 namespace Mountain_Pilot.Api.Controllers;
 
@@ -10,54 +9,46 @@ namespace Mountain_Pilot.Api.Controllers;
 [Route("[controller]")]
 public class CatalogController : ControllerBase
 {
-  private static readonly List<Item> Catalog = new()
-{
-    new Item("Item One","Description one","Brand One",10.00m)
+    private readonly StoreContext _db;
+    public CatalogController(StoreContext db)
     {
-        Id = 1
-    },
-    new Item("1", "Item One", "Description one", 10.00m),
-    new Item("2", "Item Two", "Description two", 20.00m)
-};
-
-    new Item("Item Two","Description two","Brand Two",20.00m)
-    {
-        Id = 2
+        _db = db;
     }
-};
     [HttpGet]
     public ActionResult<List<Item>> GetItems()
     {
-        return Catalog;
+        return Ok(_db.Items);
     }
 
     [HttpGet("{id:int}")]
     public ActionResult<Item> GetItem(int id)
     {
-        var item = Catalog.Find(i => i.Id == id);
+        var item = _db.Items.Find(id);
         if (item == null)
         {
             return NotFound();
         }
-        return item;
+        return Ok(item);
     }
 
     [HttpPost]
-    public ActionResult<Item> PostItem(Item newItem)
+    public ActionResult<Item> PostItem(Item item)
     {
-        Catalog.Add(newItem);
-        return CreatedAtAction(nameof(GetItem), new { id = newItem.Id }, newItem);
+        _db.Items.Add(item);
+        _db.SaveChanges();
+        return Created($"/catalog/{item.Id}", item);
     }
 
     [HttpPost("{id:int}/ratings")]
     public ActionResult<Item> PostRating(int id, Rating newRating)
     {
-        var item = Catalog.Find(i => i.Id == id);
+        var item = _db.Items.Find(id);
         if (item == null)
         {
             return NotFound();
         }
         item.AddRating(newRating);
+        _db.SaveChanges();
         return Ok(item);
     }
 
@@ -69,26 +60,30 @@ public class CatalogController : ControllerBase
             return BadRequest();
         }
 
-        var index = Catalog.FindIndex(i => i.Id == id);
-        if (index == -1)
+        var item = _db.Items.Find(id);
+        if (item == null)
         {
             return NotFound();
         }
 
-        Catalog[index] = updatedItem;
+        _db.Entry(item).CurrentValues.SetValues(updatedItem);
+        _db.SaveChanges();
         return NoContent();
     }
+   
+   
     [Authorize("delete:catalog")]
     [HttpDelete("{id:int}")]
     public ActionResult DeleteItem(int id)
     {
-        var index = Catalog.FindIndex(i => i.Id == id);
-        if (index == -1)
+        var item = _db.Items.Find(id);
+        if (item == null)
         {
             return NotFound();
         }
 
-        Catalog.RemoveAt(index);
+        _db.Items.Remove(item);
+        _db.SaveChanges();
         return NoContent();
     }
 }
