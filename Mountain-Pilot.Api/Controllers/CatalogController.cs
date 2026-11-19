@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Mountain_Pilot.Domain;
+using Mountain_Pilot.Domain.Catalog;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Mountain_Pilot.Api.Controllers;
 
@@ -7,11 +9,11 @@ namespace Mountain_Pilot.Api.Controllers;
 [Route("[controller]")]
 public class CatalogController : ControllerBase
 {
-    private static readonly List<Item> Catalog = new()
-    {
-        new Item(1, "Item One", "Description one", 10.00m),
-        new Item(2, "Item Two", "Description two", 20.00m)
-    };
+  private static readonly List<Item> Catalog = new()
+{
+    new Item("1", "Item One", "Description one", 10.00m),
+    new Item("2", "Item Two", "Description two", 20.00m)
+};
 
     [HttpGet]
     public ActionResult<List<Item>> GetItems()
@@ -66,7 +68,7 @@ public class CatalogController : ControllerBase
         Catalog[index] = updatedItem;
         return NoContent();
     }
-
+    [Authorize("delete:catalog")]
     [HttpDelete("{id:int}")]
     public ActionResult DeleteItem(int id)
     {
