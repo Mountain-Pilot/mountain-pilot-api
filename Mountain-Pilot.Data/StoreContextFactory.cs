@@ -12,7 +12,8 @@ namespace Mountain_Pilot.Data
                 new DbContextOptionsBuilder<StoreContext>();
 
             optionsBuilder.UseSqlite(
-                "Data Source=../Registrar.sqlite");
+                "Data Source=../Registrar.sqlite",
+                b => b.MigrationsAssembly("Mountain-Pilot.Api"));
 
             return new StoreContext(
                 optionsBuilder.Options);
